@@ -28,7 +28,7 @@ jobs:
       - name: 'Copy files'
         shell: bash
         run: |
-          mv -rf ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }} ~/
+          mv ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }} ~/
 
       - name: 'Resolve Project Dependencies Using Npm'
         shell: bash
