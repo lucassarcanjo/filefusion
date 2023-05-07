@@ -24,6 +24,12 @@ const httpTrigger: AzureFunction = async function (
     return context.res;
   }
 
+  if (!req.query.filename) {
+    context.res.body = `Filename query parameter is not defined`;
+    context.res.status = HTTP_CODES.BAD_REQUEST;
+    return context.res;
+  }
+
   if (
     !req.body ||
     !req.body.image ||
@@ -44,9 +50,7 @@ const httpTrigger: AzureFunction = async function (
       inputFormat: req.body.inputFormat,
     });
 
-    const fileId = context.bindingData.sys.randGuid;
-    const fileName = `${fileId}.${req.body.outputFormat}`;
-    context.bindingData.fileName = fileName;
+    const fileName = `${req.query.filename}.${req.body.outputFormat}`;
 
     context.log(
       `Filename: ${fileName}, Input format: ${req.body.inputFormat}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`
@@ -61,7 +65,7 @@ const httpTrigger: AzureFunction = async function (
     );
 
     context.bindings.outputDocument = JSON.stringify({
-      id: fileId,
+      id: context.bindingData.sys.randGuid,
       created: new Date().toISOString(),
       blobUrl: sasInfo.accountSasTokenUrl,
       fileName,

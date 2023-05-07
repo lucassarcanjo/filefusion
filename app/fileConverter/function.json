@@ -18,7 +18,7 @@
     {
       "name": "storage",
       "type": "blob",
-      "path": "app-files/{rand-guid}",
+      "path": "app-files/{filename}",
       "direction": "out",
       "connection": "AzureWebJobsStorage"
     },
