@@ -28,12 +28,14 @@ jobs:
       - name: 'Copy files'
         shell: bash
         run: |
-          mv ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }} ~/
+          pwd
+          mkdir -p ./repo
+          cp -r ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }} ./repo/
 
       - name: 'Resolve Project Dependencies Using Npm'
         shell: bash
         run: |
-          pushd '~/${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd './repo/${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           npm install
           npm list
           npm run build --if-present
