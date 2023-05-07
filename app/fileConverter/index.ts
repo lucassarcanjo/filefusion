@@ -1,6 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import HTTP_CODES from "http-status-enum";
-import { v4 as uuidv4 } from "uuid";
 
 import { generateReadOnlySASUrl } from "./utils/blobStorage";
 import { imageConverter } from "./utils/converter";
@@ -45,7 +44,7 @@ const httpTrigger: AzureFunction = async function (
       inputFormat: req.body.inputFormat,
     });
 
-    const fileId = uuidv4();
+    const fileId = context.bindingData.sys.randGuid;
     const fileName = `${fileId}.${req.body.outputFormat}`;
     context.bindingData.fileName = fileName;
 
