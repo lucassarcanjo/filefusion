@@ -21,6 +21,15 @@
       "path": "app-files/{filename}",
       "direction": "out",
       "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outputDocument",
+      "databaseName": "db",
+      "collectionName": "actions",
+      "createIfNotExists": "true",
+      "connectionStringSetting": "CosmosDbConnectionString"
     }
   ],
   "scriptFile": "../dist/fileConverter/index.js"
