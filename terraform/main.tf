@@ -45,6 +45,12 @@ resource "azurerm_storage_account" "sa" {
   account_replication_type = "LRS"
 }
 
+resource "azurerm_storage_container" "sc" {
+  name = "app-files"
+  storage_account_name = azurerm_storage_account.sa.name
+  container_access_type = "blob"
+}
+
 // Function App
 resource "azurerm_service_plan" "plan" {
   name = "filefusion-app-plan"
