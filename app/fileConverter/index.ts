@@ -2,7 +2,7 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import Jimp from "jimp";
 import HTTP_CODES from "http-status-enum";
 import { v4 as uuidv4 } from "uuid";
-import { generateReadOnlySASUrl } from "./azure-storage-blob-sas-url";
+import { generateReadOnlySASUrl } from "./azureStorageUtil";
 
 const containerName = "app-files";
 

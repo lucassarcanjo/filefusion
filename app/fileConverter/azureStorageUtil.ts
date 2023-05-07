@@ -1,4 +1,3 @@
-// Used to get read-only SAS token URL
 import {
   BlobSASPermissions,
   BlobServiceClient,
