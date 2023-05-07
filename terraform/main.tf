@@ -46,6 +46,12 @@ resource "azurerm_storage_account" "sa" {
 }
 
 // Function App
+resource "azurerm_storage_share" "share" {
+  name = "filefusion-share"
+  storage_account_name = azurerm_storage_account.sa.name
+  quota = 50
+}
+
 resource "azurerm_service_plan" "plan" {
   name = "filefusion-app-plan"
   location = azurerm_resource_group.rg.location
