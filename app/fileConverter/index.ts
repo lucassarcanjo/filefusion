@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import sharp from "sharp";
+import Jimp from "jimp";
 import HTTP_CODES from "http-status-enum";
 import { generateReadOnlySASUrl } from "./azure-storage-blob-sas-url";
 
@@ -38,7 +38,8 @@ const httpTrigger: AzureFunction = async function (
   try {
     const bodyBuffer = Buffer.from(req.body.image, "base64");
 
-    const convertedImage = await sharp(bodyBuffer).png().toBuffer();
+    const image = await Jimp.read(bodyBuffer);
+    const convertedImage = await image.getBufferAsync(Jimp.MIME_JPEG);
 
     context.bindings.storage = convertedImage;
 
