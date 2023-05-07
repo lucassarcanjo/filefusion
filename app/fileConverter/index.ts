@@ -3,6 +3,8 @@ import Jimp from "jimp";
 import HTTP_CODES from "http-status-enum";
 import { generateReadOnlySASUrl } from "./azure-storage-blob-sas-url";
 
+const containerName = "app-files";
+
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
@@ -39,13 +41,13 @@ const httpTrigger: AzureFunction = async function (
     const bodyBuffer = Buffer.from(req.body.image, "base64");
 
     const image = await Jimp.read(bodyBuffer);
-    const convertedImage = await image.getBufferAsync(Jimp.MIME_JPEG);
+    const convertedImage = await image.getBufferAsync(Jimp.MIME_PNG);
 
     context.bindings.storage = convertedImage;
 
     const sasInfo = await generateReadOnlySASUrl(
       process.env.AzureWebJobsStorage,
-      "app-files",
+      containerName,
       fileName
     );
 

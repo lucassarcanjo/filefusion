@@ -37,6 +37,8 @@ project.lock.json
 node_modules
 dist
 
+storage
+
 # Azurite artifacts
 __blobstorage__
 __queuestorage__
