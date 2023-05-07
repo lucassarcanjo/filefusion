@@ -26,17 +26,18 @@ export const generateReadOnlySASUrl = async (
   // connect to blob client
   const blobClient = containerClient.getBlobClient(filename);
 
-  // Best practice: create time limits
-  const SIXTY_MINUTES = 60 * 60 * 1000;
+  // Create time limits
+  const ONE_DAY = 24 * 60 * 60 * 1000;
   const NOW = new Date();
 
   // Create SAS URL
   const accountSasTokenUrl = await blobClient.generateSasUrl({
     startsOn: NOW,
-    expiresOn: new Date(new Date().valueOf() + SIXTY_MINUTES),
+    expiresOn: new Date(new Date().valueOf() + ONE_DAY),
     permissions: BlobSASPermissions.parse("r"), // Read only permission to the blob
     protocol: SASProtocol.Https, // Only allow HTTPS access to the blob
   });
+
   return {
     accountSasTokenUrl,
     storageAccountName: blobClient.accountName,

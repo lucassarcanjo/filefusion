@@ -1,8 +1,9 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import Jimp from "jimp";
 import HTTP_CODES from "http-status-enum";
 import { v4 as uuidv4 } from "uuid";
-import { generateReadOnlySASUrl } from "./azureStorageUtil";
+
+import { generateReadOnlySASUrl } from "./utils/blobStorage";
+import { imageConverter } from "./utils/converter";
 
 const containerName = "app-files";
 
@@ -12,37 +13,44 @@ const httpTrigger: AzureFunction = async function (
 ) {
   const storageConnectionString = process.env.AzureWebJobsStorage;
   if (!storageConnectionString) {
-    context.res.body = `AzureWebJobsStorage env var is not defined - get Storage Connection string from Azure portal`;
+    context.res.body = `AzureWebJobsStorage env var is not defined - get Storage connection string from Azure portal`;
     context.res.status = HTTP_CODES.BAD_REQUEST;
     return context.res;
   }
 
-  const fileName = req.query?.filename;
-  if (!fileName) {
-    context.res = {
-      status: HTTP_CODES.BAD_REQUEST,
-      body: "filename is required",
-    };
+  const cosmosConnectionString = process.env.CosmosDbConnectionString;
+  if (!cosmosConnectionString) {
+    context.res.body = `CosmosDbConnectionString env var is not defined - get Cosmos connection string from Azure portal`;
+    context.res.status = HTTP_CODES.BAD_REQUEST;
     return context.res;
   }
 
-  if (!req.body || !req.body.image) {
+  if (
+    !req.body ||
+    !req.body.image ||
+    !req.body.outputFormat ||
+    !req.body.inputFormat
+  ) {
     context.res = {
       status: HTTP_CODES.BAD_REQUEST,
-      body: "image property is required",
+      body: "Body is malformed",
     };
     return context.res;
   }
-
-  context.log(
-    `Filename: ${req.query.filename}, Content type:${req.headers["content-type"]}`
-  );
 
   try {
-    const bodyBuffer = Buffer.from(req.body.image, "base64");
+    const convertedImage = await imageConverter({
+      image: req.body.image,
+      outputFormat: req.body.outputFormat,
+      inputFormat: req.body.inputFormat,
+    });
 
-    const image = await Jimp.read(bodyBuffer);
-    const convertedImage = await image.getBufferAsync(Jimp.MIME_PNG);
+    const fileId = uuidv4();
+    const fileName = `${fileId}.${req.body.outputFormat}`;
+
+    context.log(
+      `Filename: ${fileName}, Input format: ${req.body.inputFormat}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`
+    );
 
     context.bindings.storage = convertedImage;
 
@@ -53,10 +61,10 @@ const httpTrigger: AzureFunction = async function (
     );
 
     context.bindings.outputDocument = JSON.stringify({
-      id: uuidv4(),
+      id: fileId,
       created: new Date().toISOString(),
       blobUrl: sasInfo.accountSasTokenUrl,
-      fileName: fileName,
+      fileName,
     });
 
     context.res = {
