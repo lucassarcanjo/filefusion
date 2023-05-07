@@ -48,5 +48,5 @@ jobs:
         with:
           app-name: 'filefusion-function'
           slot-name: 'Production'
-          package: ~/${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: './repo/${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_51437C3B67334161ACA9314BF7C564CC }}
