@@ -47,6 +47,7 @@ const httpTrigger: AzureFunction = async function (
 
     const fileId = uuidv4();
     const fileName = `${fileId}.${req.body.outputFormat}`;
+    context.bindingData.fileName = fileName;
 
     context.log(
       `Filename: ${fileName}, Input format: ${req.body.inputFormat}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`
