@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import * as sharp from "sharp";
+import sharp from "sharp";
 import HTTP_CODES from "http-status-enum";
 import { generateReadOnlySASUrl } from "./azure-storage-blob-sas-url";
 
