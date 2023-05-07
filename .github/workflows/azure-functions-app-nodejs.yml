@@ -27,7 +27,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: 'filefusion-function'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'app/'
-  NODE_VERSION: '16.x'
+  NODE_VERSION: '18.x'
 
 jobs:
   build-and-deploy:
