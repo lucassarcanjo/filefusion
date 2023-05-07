@@ -1,8 +1,7 @@
 {
-  "name": "function",
+  "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/functions/*.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -10,10 +9,9 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {
-    "@azure/functions": "^4.0.0-alpha.1"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@azure/functions": "^3.0.0",
     "azure-functions-core-tools": "^4.x",
     "@types/node": "18.x",
     "typescript": "^4.0.0"
