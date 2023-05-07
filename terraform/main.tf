@@ -46,12 +46,6 @@ resource "azurerm_storage_account" "sa" {
 }
 
 // Function App
-resource "azurerm_storage_share" "share" {
-  name = "filefusion-share"
-  storage_account_name = azurerm_storage_account.sa.name
-  quota = 50
-}
-
 resource "azurerm_service_plan" "plan" {
   name = "filefusion-app-plan"
   location = azurerm_resource_group.rg.location
@@ -71,7 +65,6 @@ resource "azurerm_linux_function_app" "app" {
   site_config {
     application_insights_connection_string = azurerm_application_insights.ai.connection_string
     application_insights_key = azurerm_application_insights.ai.instrumentation_key
-    http2_enabled = true
 
     application_stack {
       node_version = 18
