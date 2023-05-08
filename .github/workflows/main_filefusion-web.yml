@@ -28,6 +28,8 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "web/"
           output_location: "dist/"
+        env:
+          VITE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_AI_CONNECTION_STRING }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
