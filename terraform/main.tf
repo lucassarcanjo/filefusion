@@ -123,3 +123,15 @@ resource "azurerm_cosmosdb_sql_container" "container" {
   partition_key_path    = "/definition/id"
   partition_key_version = 1
 }
+
+// Azure Static Web App
+resource "azurerm_static_site" "web" {
+  name                = "filefusion-web"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+}
+
+output "web_app_deployment_token" {
+  value     = azurerm_static_site.web.api_key
+  sensitive = true
+}
