@@ -15,6 +15,7 @@
     "@microsoft/applicationinsights-react-js": "^3.4.2",
     "@microsoft/applicationinsights-web": "2.8.13",
     "@radix-ui/react-progress": "^1.0.2",
+    "@radix-ui/react-select": "^1.2.1",
     "@radix-ui/react-separator": "^1.0.2",
     "@radix-ui/react-slot": "^1.0.1",
     "@radix-ui/react-toast": "^1.1.3",

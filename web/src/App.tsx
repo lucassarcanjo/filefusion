@@ -1,12 +1,21 @@
 import { useRef, useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { FileImage } from "lucide-react";
 
 import fileMoving from "./assets/file-moving.json";
 import { Separator } from "./components/Separator";
 import { Button } from "./components/Button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./components/Select";
 
 function App() {
   const [dragActive, setDragActive] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
 
   const playerRef = useRef<Player>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -30,6 +39,8 @@ function App() {
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       // handleFiles(e.dataTransfer.files);
       console.log("drag");
+
+      setFiles(Array.from(event.dataTransfer.files));
     }
   };
 
@@ -37,6 +48,8 @@ function App() {
     if (event.target.files && event.target.files[0]) {
       // handleFiles(e.target.files);
       console.log("change");
+
+      setFiles(Array.from(event.target.files));
     }
   };
 
@@ -58,7 +71,7 @@ function App() {
 
             <Separator className="my-4 max-w-xs" />
 
-            <label htmlFor="picture">
+            <label htmlFor="picture-input">
               <Button
                 className="bg-[#3A55F3] font-bold"
                 onClick={() => fileInputRef.current?.click()}
@@ -67,11 +80,12 @@ function App() {
               </Button>
               <input
                 multiple
-                id="picture"
+                id="picture-input"
                 type="file"
                 className="hidden"
                 ref={fileInputRef}
                 onChange={handleChange}
+                accept="image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/tiff"
               />
 
               {dragActive && (
@@ -86,6 +100,56 @@ function App() {
             </label>
           </div>
         </form>
+        {files.length > 0 && (
+          <div className="mt-4 ">
+            <ul className="mt-2 flex flex-col gap-4">
+              {files.map((file) => (
+                <li
+                  key={file.name}
+                  className="text-sm bg-[#F9F9F9] rounded-xl p-4 flex gap-4 items-center"
+                >
+                  <FileImage size={20} className="text-[#BBC9D7]" />
+                  <span className="mr-auto">{file.name}</span>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Formato" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="png">PNG</SelectItem>
+                      <SelectItem value="jpeg">JPEG</SelectItem>
+                      <SelectItem value="gif">GIF</SelectItem>
+                      <SelectItem value="bmp">BMP</SelectItem>
+                      <SelectItem value="tiff">TIFF</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#3A55F3]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </li>
+              ))}
+            </ul>
+            {/* <p className="mt-6 text-sm text-muted-foreground text-right">
+              {files.length} arquivos selecionados
+            </p> */}
+          </div>
+        )}
       </section>
     </main>
   );
