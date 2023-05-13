@@ -281,7 +281,7 @@ function App() {
                               variant="ghost"
                               onClick={() => downloadRef.current?.play()}
                             >
-                              <a href={result}>
+                              <a href={result} target="_blank">
                                 <Player ref={downloadRef} src={download} />
                               </a>
                             </Button>
