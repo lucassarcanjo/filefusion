@@ -4,6 +4,10 @@
 
 Este projeto é uma aplicação web que permite aos usuários fazer upload de imagens e convertê-las para um formato diferente. O projeto usa o Azure para hospedar toda a infraestrutura, incluindo um aplicativo web frontend, uma Azure Function para converter imagens usando o Typescript e Jimp e uma pasta Terraform contendo toda a infraestrutura como código (IaC).
 
+![Screenshot](docs/app.gif)
+
+Visite a versão publicada [🌐 aqui](https://ashy-pebble-04e23f00f.3.azurestaticapps.net/).
+
 ## Arquitetura
 
 ![Architecture](docs/architecture.png)
