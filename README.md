@@ -1,39 +1,29 @@
-# Image Converter
+# 🖼️ FileFusion - Conversor de Imagens
 
-This project is a web application that allows users to upload images and convert them to a different format. The project uses Azure to host all infrastructure, including a frontend web app, an Azure Function to convert images using Jimp, and a Terraform folder containing all the infrastructure as code (IaC).
+Este projeto é uma aplicação web que permite aos usuários fazer upload de imagens e convertê-las para um formato diferente. O projeto usa o Azure para hospedar toda a infraestrutura, incluindo um aplicativo web frontend, uma Azure Function para converter imagens usando o Typescript e Jimp e uma pasta Terraform contendo toda a infraestrutura como código (IaC).
 
 ## Architecture
 
-The architecture of the application consists of three main components:
+![Architecture](docs/architecture.png)
 
-1. Frontend Web App - The frontend is built using React, TypeScript, and Vite. It provides a user interface for uploading images and selecting the desired output format.
+A arquitetura da aplicação consiste em três componentes principais:
 
-2. Azure Function - The Azure Function is an HTTP trigger that converts images using the Jimp library. It is responsible for receiving the uploaded image, processing it, and returning the converted image to the user.
+1. Frontend Web App - O frontend é construído usando React, TypeScript e Vite. Ele fornece uma interface de usuário para fazer upload de imagens e selecionar o formato de saída desejado.
+2. Azure Function - A Azure Function é um gatilho HTTP que converte imagens usando a biblioteca Jimp. É responsável por receber a imagem enviada, processá-la e retornar a imagem convertida para o usuário.
+3. Terraform - A pasta Terraform contém toda a infraestrutura como código. Ele define os recursos do Azure necessários para a aplicação, incluindo a Storage Account para armazenar as imagens enviadas, o aplicativo de função para hospedar a Azure Function e os componentes de rede necessários.
 
-3. Terraform - The Terraform folder contains all the infrastructure as code. It defines the Azure resources required for the application, including the storage account for storing uploaded images, the function app for hosting the Azure Function, and the necessary networking components.
+## Como começar
 
-## Getting Started
+Para começar com o projeto, siga estas etapas:
 
-To get started with the project, follow these steps:
+1. Clone o repositório para sua máquina local.
+2. Instale o Terraform e configure suas credenciais do Azure.
+3. Navegue até a pasta `terraform` e execute `terraform init` para inicializar o projeto.
+4. Execute `terraform apply` para criar os recursos do Azure necessários.
+5. Execute `npm install` para instalar as dependências na raiz do repositório.
+6. Execute `npm start` para iniciar o aplicativo web frontend e a azure function.
+7. Abra o navegador e acesse `http://localhost:5173` para acessar o aplicativo web e converter uma imagem.
 
-1. Clone the repository to your local machine.
-2. Install Terraform and set up your Azure credentials.
-3. Navigate to the `terraform` folder and run `terraform init` to initialize the project.
-4. Run `terraform apply` to create the necessary Azure resources.
-5. Navigate to the `frontend` folder and run `npm install` to install the dependencies.
-6. Run `npm start` to start the frontend web app.
-7. Upload an image and select the desired output format to convert the image.
+## Licença
 
-## Contributing
-
-Contributions to the project are welcome. To contribute, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Make your changes and commit them to your branch.
-4. Push your changes to your fork.
-5. Create a pull request to merge your changes into the main repository.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
