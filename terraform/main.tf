@@ -72,6 +72,10 @@ resource "azurerm_linux_function_app" "app" {
     application_insights_connection_string = azurerm_application_insights.ai.connection_string
     application_insights_key               = azurerm_application_insights.ai.instrumentation_key
 
+    cors {
+      allowed_origins = ["*"]
+    }
+
     application_stack {
       node_version = 18
     }
