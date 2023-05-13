@@ -30,12 +30,7 @@ const httpTrigger: AzureFunction = async function (
     return context.res;
   }
 
-  if (
-    !req.body ||
-    !req.body.image ||
-    !req.body.outputFormat ||
-    !req.body.inputFormat
-  ) {
+  if (!req.body || !req.body.image || !req.body.outputFormat) {
     context.res = {
       status: HTTP_CODES.BAD_REQUEST,
       body: "Body is malformed",
@@ -50,10 +45,10 @@ const httpTrigger: AzureFunction = async function (
       inputFormat: req.body.inputFormat,
     });
 
-    const fileName = `${req.query.filename}.${req.body.outputFormat}`;
+    const fileName = req.query.filename;
 
     context.log(
-      `Filename: ${fileName}, Input format: ${req.body.inputFormat}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`
+      `Filename: ${fileName}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`
     );
 
     context.bindings.storage = convertedImage;
@@ -72,7 +67,7 @@ const httpTrigger: AzureFunction = async function (
     });
 
     context.res = {
-      status: HTTP_CODES.ACCEPTED,
+      status: HTTP_CODES.OK,
       body: {
         fileName,
         url: sasInfo.accountSasTokenUrl,

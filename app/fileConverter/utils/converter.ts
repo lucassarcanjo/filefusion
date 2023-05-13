@@ -8,23 +8,26 @@ export interface ConverterInput {
   inputFormat: string;
 }
 
-const formatOptions = z.enum(["png", "jpg", "bmp", "tiff", "gif"]);
+const formatOptions = z.enum([
+  "image/png",
+  "image/jpeg",
+  "image/bmp",
+  "image/tiff",
+  "image/gif",
+]);
 
 const converterSchema = z.object({
   image: z.string().refine(Base64.isValid),
   outputFormat: formatOptions,
-  inputFormat: formatOptions,
 });
 
 export const imageConverter = async ({
   image,
   outputFormat,
-  inputFormat,
 }: ConverterInput) => {
   const validation = converterSchema.safeParse({
     image,
     outputFormat,
-    inputFormat,
   });
 
   if (!validation.success) {
@@ -36,7 +39,7 @@ export const imageConverter = async ({
   const jimpImage = await Jimp.read(bodyBuffer);
   const convertedImage = await jimpImage
     .quality(100)
-    .getBufferAsync(`image/${outputFormat}`);
+    .getBufferAsync(outputFormat);
 
   return convertedImage;
 };
