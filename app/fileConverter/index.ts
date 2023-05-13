@@ -24,13 +24,12 @@ const httpTrigger: AzureFunction = async function (
     return context.res;
   }
 
-  if (!req.query.filename) {
-    context.res.body = `Filename query parameter is not defined`;
-    context.res.status = HTTP_CODES.BAD_REQUEST;
-    return context.res;
-  }
-
-  if (!req.body || !req.body.image || !req.body.outputFormat) {
+  if (
+    !req.body ||
+    !req.body.image ||
+    !req.body.filename ||
+    !req.body.outputFormat
+  ) {
     context.res = {
       status: HTTP_CODES.BAD_REQUEST,
       body: "Body is malformed",
@@ -42,10 +41,9 @@ const httpTrigger: AzureFunction = async function (
     const convertedImage = await imageConverter({
       image: req.body.image,
       outputFormat: req.body.outputFormat,
-      inputFormat: req.body.inputFormat,
     });
 
-    const fileName = req.query.filename;
+    const fileName = req.body.filename;
 
     context.log(
       `Filename: ${fileName}, Output format: ${req.body.outputFormat}, Image size: ${convertedImage.length}`

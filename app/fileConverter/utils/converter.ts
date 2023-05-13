@@ -5,7 +5,6 @@ import { Base64 } from "js-base64";
 export interface ConverterInput {
   image: string;
   outputFormat: string;
-  inputFormat: string;
 }
 
 const formatOptions = z.enum([
