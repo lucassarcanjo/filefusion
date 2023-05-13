@@ -1,5 +1,7 @@
 # FileFusion
 
+[![Azure Function](https://github.com/lucassarcanjo/filefusion/actions/workflows/main_filefusion-function.yml/badge.svg)](https://github.com/lucassarcanjo/filefusion/actions/workflows/main_filefusion-function.yml) [![Web App](https://github.com/lucassarcanjo/filefusion/actions/workflows/main_filefusion-web.yml/badge.svg)](https://github.com/lucassarcanjo/filefusion/actions/workflows/main_filefusion-web.yml)
+
 Este projeto é uma aplicação web que permite aos usuários fazer upload de imagens e convertê-las para um formato diferente. O projeto usa o Azure para hospedar toda a infraestrutura, incluindo um aplicativo web frontend, uma Azure Function para converter imagens usando o Typescript e Jimp e uma pasta Terraform contendo toda a infraestrutura como código (IaC).
 
 ## Arquitetura
