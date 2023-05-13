@@ -1,8 +1,8 @@
-# 🖼️ FileFusion - Conversor de Imagens
+# FileFusion
 
 Este projeto é uma aplicação web que permite aos usuários fazer upload de imagens e convertê-las para um formato diferente. O projeto usa o Azure para hospedar toda a infraestrutura, incluindo um aplicativo web frontend, uma Azure Function para converter imagens usando o Typescript e Jimp e uma pasta Terraform contendo toda a infraestrutura como código (IaC).
 
-## Architecture
+## Arquitetura
 
 ![Architecture](docs/architecture.png)
 
